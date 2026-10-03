@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>English Grammar Master: Conditionals 1 & 2</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        c1: {
+                            light: '#ecfdf5',
+                            border: '#a7f3d0',
+                            DEFAULT: '#059669',
+                            dark: '#047857'
+                        },
+                        c2: {
+                            light: '#eef2ff',
+                            border: '#c7d2fe',
+                            DEFAULT: '#4f46e5',
+                            dark: '#4338ca'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Canvas Confetti for Celebration -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans min-h-full flex flex-col antialiased selection:bg-indigo-500 selection:text-white">
+
+    <!-- Top Header & Navigation -->
+    <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-200 shadow-sm">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Brand Logo -->
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-emerald-500 to-indigo-600 flex items-center justify-center text-white shadow-md shadow-indigo-200">
+                        <i data-lucide="book-open-check" class="w-6 h-6"></i>
+                    </div>
+                    <div>
+                        <h1 class="font-bold text-lg leading-tight text-slate-900">Grammar Lab</h1>
+                        <p class="text-xs text-slate-500 font-medium">Conditionals 1 & 2 Masterclass</p>
+                    </div>
+                </div>
+
+                <!-- Live Score & Progress Header -->
+                <div class="flex items-center gap-4">
+                    <div class="hidden sm:flex items-center gap-2 bg-slate-100 px-3 py-1.5 rounded-full border border-slate-200 text-xs font-semibold">
+                        <span class="flex items-center text-amber-500 gap-1">
+                            <i data-lucide="zap" class="w-4 h-4 fill-amber-500"></i>
+                            <span id="streakCount">0</span> Streak
+                        </span>
+                        <span class="text-slate-300">|</span>
+                        <span class="text-indigo-600 flex items-center gap-1">
+                            <i data-lucide="award" class="w-4 h-4"></i>
+                            Score: <span id="headerScore">0</span>/15
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Banner with Progress Bar -->
+    <div class="bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 text-white py-8 px-4 sm:px-6 lg:px-8 border-b border-indigo-900/50">
+        <div class="max-w-6xl mx-auto flex flex-col md:flex-row md:items-center justify-between gap-6">
+            <div>
+                <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 mb-2">
+                    <i data-lucide="sparkles" class="w-3.5 h-3.5"></i> English Grammar Level B1-B2
+                </span>
+                <h2 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">First vs. Second Conditional</h2>
+                <p class="text-slate-300 text-sm sm:text-base mt-1 max-w-2xl">Master the differences between real future possibilities and hypothetical situations.</p>
+            </div>
+
+            <!-- Global Learning Progress Widget -->
+            <div class="bg-white/10 backdrop-blur-md p-4 rounded-2xl border border-white/10 w-full md:w-80">
+                <div class="flex justify-between items-center text-xs text-slate-200 mb-2 font-medium">
+                    <span>Overall Mastery</span>
+                    <span id="progressPercentage">0%</span>
+                </div>
+                <div class="w-full bg-slate-800 rounded-full h-2.5 overflow-hidden p-0.5 border border-white/10">
+                    <div id="mainProgressBar" class="bg-gradient-to-r from-emerald-400 to-indigo-500 h-1.5 rounded-full w-0 transition-all duration-500 ease-out"></div>
+                </div>
+                <p id="badgeStatus" class="text-xs text-indigo-200 mt-2 text-right font-medium">Earn 80%+ for Certificate 🏆</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- App Navigation Tabs -->
+    <div class="bg-white border-b border-slate-200 sticky top-16 z-40 shadow-xs">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex space-x-2 sm:space-x-8 overflow-x-auto no-scrollbar">
+            <button onclick="switchTab('learn')" id="tab-learn" class="tab-btn flex items-center gap-2 py-4 px-2 border-b-2 border-indigo-600 text-indigo-600 font-semibold text-sm whitespace-nowrap transition-colors">
+                <i data-lucide="book-open" class="w-4 h-4"></i>
+                1. Study Guide
+            </button>
+            <button onclick="switchTab('quiz')" id="tab-quiz" class="tab-btn flex items-center gap-2 py-4 px-2 border-b-2 border-transparent text-slate-500 hover:text-slate-800 font-semibold text-sm whitespace-nowrap transition-colors">
+                <i data-lucide="help-circle" class="w-4 h-4"></i>
+                2. Multiple Choice (Part A)
+            </button>
+            <button onclick="switchTab('fill')" id="tab-fill" class="tab-btn flex items-center gap-2 py-4 px-2 border-b-2 border-transparent text-slate-500 hover:text-slate-800 font-semibold text-sm whitespace-nowrap transition-colors">
+                <i data-lucide="edit-3" class="w-4 h-4"></i>
+                3. Fill in Blanks (Part B)
+            </button>
+            <button onclick="switchTab('builder')" id="tab-builder" class="tab-btn flex items-center gap-2 py-4 px-2 border-b-2 border-transparent text-slate-500 hover:text-slate-800 font-semibold text-sm whitespace-nowrap transition-colors">
+                <i data-lucide="layers" class="w-4 h-4"></i>
+                4. Sentence Builder (Part C)
+            </button>
+        </div>
+    </div>
+
+    <!-- Main Content Container -->
+    <main class="flex-1 max-w-6xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+        <!-- TAB 1: INTERACTIVE STUDY GUIDE -->
+        <section id="sec-learn" class="tab-content space-y-8 block">
+            <!-- Selector Header -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- First Conditional Card -->
+                <div class="bg-white rounded-2xl p-6 border border-emerald-200 shadow-sm hover:shadow-md transition-shadow relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 w-24 h-24 bg-emerald-500/10 rounded-full blur-2xl group-hover:bg-emerald-500/20 transition-all"></div>
+                    <div class="flex items-center gap-3 mb-4">
+                        <span class="px-3 py-1 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800 uppercase tracking-wider">Conditional 1</span>
+                        <span class="text-xs font-medium text-slate-500 flex items-center gap-1">
+                            <i data-lucide="check-circle" class="w-3.5 h-3.5 text-emerald-600"></i> Real & Probable
+                        </span>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-2">The First Conditional</h3>
+                    <p class="text-slate-600 text-sm mb-4">Used for realistic situations, future possibilities, plans, promises, or warnings that are very likely to happen.</p>
+
+                    <!-- Interactive Formula Box -->
+                    <div class="bg-emerald-50 rounded-xl p-4 border border-emerald-200 space-y-2">
+                        <div class="text-xs font-bold uppercase text-emerald-800 tracking-wider">Formula Breakdown</div>
+                        <div class="flex flex-wrap items-center gap-2 text-sm font-semibold">
+                            <span class="bg-white px-2.5 py-1 rounded-lg border border-emerald-300 text-emerald-900 shadow-xs">If + Present Simple</span>
+                            <span class="text-emerald-600 font-bold">+</span>
+                            <span class="bg-white px-2.5 py-1 rounded-lg border border-emerald-300 text-emerald-900 shadow-xs">Will + Base Verb</span>
+                        </div>
+                    </div>
+
+                    <!-- Usage Bullet points -->
+                    <ul class="mt-4 space-y-2 text-sm text-slate-600">
+                        <li class="flex items-start gap-2">
+                            <i data-lucide="arrow-right-circle" class="w-4 h-4 text-emerald-600 shrink-0 mt-0.5"></i>
+                            <span><strong>Future Prediction:</strong> <em>If it rains tomorrow, I will stay at home.</em></span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <i data-lucide="arrow-right-circle" class="w-4 h-4 text-emerald-600 shrink-0 mt-0.5"></i>
+                            <span><strong>Promises/Plans:</strong> <em>If you help me study, I will buy you coffee.</em></span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Second Conditional Card -->
+                <div class="bg-white rounded-2xl p-6 border border-indigo-200 shadow-sm hover:shadow-md transition-shadow relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 w-24 h-24 bg-indigo-500/10 rounded-full blur-2xl group-hover:bg-indigo-500/20 transition-all"></div>
+                    <div class="flex items-center gap-3 mb-4">
+                        <span class="px-3 py-1 rounded-full text-xs font-bold bg-indigo-100 text-indigo-800 uppercase tracking-wider">Conditional 2</span>
+                        <span class="text-xs font-medium text-slate-500 flex items-center gap-1">
+                            <i data-lucide="cloud" class="w-3.5 h-3.5 text-indigo-600"></i> Hypothetical & Unreal
+                        </span>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-2">The Second Conditional</h3>
+                    <p class="text-slate-600 text-sm mb-4">Used for imaginary, hypothetical, or impossible situations in the present/future, as well as giving advice.</p>
+
+                    <!-- Interactive Formula Box -->
+                    <div class="bg-indigo-50 rounded-xl p-4 border border-indigo-200 space-y-2">
+                        <div class="text-xs font-bold uppercase text-indigo-800 tracking-wider">Formula Breakdown</div>
+                        <div class="flex flex-wrap items-center gap-2 text-sm font-semibold">
+                            <span class="bg-white px-2.5 py-1 rounded-lg border border-indigo-300 text-indigo-900 shadow-xs">If + Past Simple</span>
+                            <span class="text-indigo-600 font-bold">+</span>
+                            <span class="bg-white px-2.5 py-1 rounded-lg border border-indigo-300 text-indigo-900 shadow-xs">Would + Base Verb</span>
+                        </div>
+                    </div>
+
+                    <!-- Usage Bullet points -->
+                    <ul class="mt-4 space-y-2 text-sm text-slate-600">
+                        <li class="flex items-start gap-2">
+                            <i data-lucide="arrow-right-circle" class="w-4 h-4 text-indigo-600 shrink-0 mt-0.5"></i>
+                            <span><strong>Imaginary Outcome:</strong> <em>If I won the lottery, I would buy a yacht.</em></span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <i data-lucide="arrow-right-circle" class="w-4 h-4 text-indigo-600 shrink-0 mt-0.5"></i>
+                            <span><strong>Advice (If I were you):</strong> <em>If I were you, I would take the job offer.</em></span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Pro Tip Banner -->
+            <div class="bg-amber-50 border border-amber-200 rounded-2xl p-4 sm:p-5 flex items-start gap-4">
+                <div class="p-2.5 bg-amber-100 rounded-xl text-amber-800 shrink-0">
+                    <i data-lucide="lightbulb" class="w-6 h-6"></i>
+                </div>
+                <div>
+                    <h4 class="font-bold text-amber-900 text-base">Pro Tip: "Was" vs "Were" in 2nd Conditional</h4>
+                    <p class="text-amber-800 text-sm mt-0.5">In formal English and academic tests, always use <strong class="underline decoration-amber-400">were</strong> instead of <em>was</em> for all subjects in the <em>if-clause</em> (e.g., <em>"If I <strong>were</strong> rich..."</em> or <em>"If she <strong>were</strong> here..."</em>).</p>
+                </div>
+            </div>
+
+            <!-- Side by Side Comparison Matrix Table -->
+            <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+                <div class="p-6 border-b border-slate-200">
+                    <h3 class="text-lg font-bold text-slate-900">Side-by-Side Comparison</h3>
+                    <p class="text-slate-500 text-sm">Compare how the exact same context changes meaning based on the conditional type.</p>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-slate-50 text-slate-700 text-xs uppercase tracking-wider font-semibold border-b border-slate-200">
+                                <th class="py-3 px-4 sm:px-6">Context</th>
+                                <th class="py-3 px-4 sm:px-6 bg-emerald-50/50 text-emerald-900">Conditional 1 (Real)</th>
+                                <th class="py-3 px-4 sm:px-6 bg-indigo-50/50 text-indigo-900">Conditional 2 (Unreal)</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-200 text-sm">
+                            <tr class="hover:bg-slate-50/50 transition-colors">
+                                <td class="py-4 px-4 sm:px-6 font-medium text-slate-800">Weather / Rain</td>
+                                <td class="py-4 px-4 sm:px-6 bg-emerald-50/20 text-slate-700">
+                                    If it <strong>rains</strong>, I <strong>will take</strong> an umbrella.<br>
+                                    <span class="text-xs text-slate-400 font-normal">(Likely to rain today)</span>
+                                </td>
+                                <td class="py-4 px-4 sm:px-6 bg-indigo-50/20 text-slate-700">
+                                    If it <strong>rained</strong> in the Sahara right now, everyone <strong>would be</strong> shocked.<br>
+                                    <span class="text-xs text-slate-400 font-normal">(Highly unlikely / imaginary)</span>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-slate-50/50 transition-colors">
+                                <td class="py-4 px-4 sm:px-6 font-medium text-slate-800">Exam Preparation</td>
+                                <td class="py-4 px-4 sm:px-6 bg-emerald-50/20 text-slate-700">
+                                    If you <strong>study</strong> hard, you <strong>will pass</strong> tomorrow's test.<br>
+                                    <span class="text-xs text-slate-400 font-normal">(Real possibility for student)</span>
+                                </td>
+                                <td class="py-4 px-4 sm:px-6 bg-indigo-50/20 text-slate-700">
+                                    If I <strong>had</strong> a magic wand, I <strong>would pass</strong> all tests without studying.<br>
+                                    <span class="text-xs text-slate-400 font-normal">(Pure fantasy)</span>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-slate-50/50 transition-colors">
+                                <td class="py-4 px-4 sm:px-6 font-medium text-slate-800">Money & Buying</td>
+                                <td class="py-4 px-4 sm:px-6 bg-emerald-50/20 text-slate-700">
+                                    If I <strong>get</strong> paid today, I <strong>will buy</strong> lunch.<br>
+                                    <span class="text-xs text-slate-400 font-normal">(Expecting paycheck soon)</span>
+                                </td>
+                                <td class="py-4 px-4 sm:px-6 bg-indigo-50/20 text-slate-700">
+                                    If I <strong>won</strong> a million dollars, I <strong>would buy</strong> a private island.<br>
+                                    <span class="text-xs text-slate-400 font-normal">(Hypothetical lottery dream)</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="flex justify-end">
+                <button onclick="switchTab('quiz')" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-xl shadow-md transition-all flex items-center gap-2">
+                    Start Part A Quiz <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                </button>
+            </div>
+        </section>
+
+        <!-- TAB 2: MULTIPLE CHOICE QUIZ (PART A) -->
+        <section id="sec-quiz" class="tab-content space-y-6 hidden">
+            <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div>
+                    <h3 class="text-xl font-bold text-slate-900">Part A: Multiple Choice Practice</h3>
+                    <p class="text-slate-500 text-sm">Select the correct verb forms to complete each sentence.</p>
+                </div>
+                <div class="flex items-center gap-2 text-xs font-bold text-slate-600 bg-slate-100 px-3 py-1.5 rounded-lg border border-slate-200">
+                    <i data-lucide="help-circle" class="w-4 h-4 text-indigo-600"></i>
+                    Questions: <span id="mcqProgress">0/5</span>
+                </div>
+            </div>
+
+            <!-- MCQ Container -->
+            <div id="mcqContainer" class="space-y-6">
+                <!-- Dynamically generated via JS -->
+            </div>
+        </section>
+
+        <!-- TAB 3: FILL IN THE BLANKS (PART B) -->
+        <section id="sec-fill" class="tab-content space-y-6 hidden">
+            <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div>
+                    <h3 class="text-xl font-bold text-slate-900">Part B: Sentence Completion</h3>
+                    <p class="text-slate-500 text-sm">Type the correct form of the verbs in brackets into the inputs.</p>
+                </div>
+                <div class="text-xs font-bold text-slate-600 bg-slate-100 px-3 py-1.5 rounded-lg border border-slate-200">
+                    Questions: <span id="fillProgress">0/5</span>
+                </div>
+            </div>
+
+            <!-- Fill in Blanks Cards Container -->
+            <div id="fillContainer" class="space-y-6">
+                <!-- Dynamically generated via JS -->
+            </div>
+        </section>
+
+        <!-- TAB 4: SENTENCE BUILDER / MATCHER GAME (PART C) -->
+        <section id="sec-builder" class="tab-content space-y-6 hidden">
+            <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <div>
+                        <h3 class="text-xl font-bold text-slate-900">Part C: Interactive Conditional Matcher</h3>
+                        <p class="text-slate-500 text-sm">Match each condition (If-clause) with its logical result clause!</p>
+                    </div>
+                    <button onclick="resetBuilderGame()" class="text-xs font-semibold px-3 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg border border-slate-300 transition-colors flex items-center gap-1.5 self-start sm:self-auto">
+                        <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i> Shuffle Cards
+                    </button>
+                </div>
+            </div>
+
+            <!-- Game Arena -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- If-Clauses Column -->
+                <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm">
+                    <h4 class="font-bold text-slate-800 text-sm uppercase tracking-wider mb-4 flex items-center gap-2">
+                        <span class="w-2 h-2 rounded-full bg-emerald-500"></span> 1. Select an "If-Clause"
+                    </h4>
+                    <div id="ifClauseList" class="space-y-3">
+                        <!-- Dynamic items -->
+                    </div>
+                </div>
+
+                <!-- Result Clauses Column -->
+                <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm">
+                    <h4 class="font-bold text-slate-800 text-sm uppercase tracking-wider mb-4 flex items-center gap-2">
+                        <span class="w-2 h-2 rounded-full bg-indigo-500"></span> 2. Select a "Result Clause"
+                    </h4>
+                    <div id="resultClauseList" class="space-y-3">
+                        <!-- Dynamic items -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Match Status Output -->
+            <div id="matchFeedback" class="hidden p-4 rounded-xl border text-sm font-semibold flex items-center justify-between">
+                <div id="matchFeedbackText">Select two items to form a complete conditional pair.</div>
+                <button onclick="confirmPairing()" id="confirmPairBtn" class="hidden bg-indigo-600 text-white text-xs px-4 py-2 rounded-lg font-bold shadow-xs hover:bg-indigo-700">Check Match</button>
+            </div>
+        </section>
+
+        <!-- Completion Modal / Certificate -->
+        <div id="certModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+            <div class="bg-white rounded-3xl max-w-xl w-full p-8 border border-slate-200 shadow-2xl relative text-center overflow-hidden">
+                <div class="w-20 h-20 bg-gradient-to-tr from-amber-400 to-amber-200 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg shadow-amber-200/50">
+                    <i data-lucide="trophy" class="w-10 h-10 text-amber-900"></i>
+                </div>
+                
+                <h3 class="text-2xl font-black text-slate-900">Congratulations!</h3>
+                <p class="text-slate-600 text-sm mt-1">You have completed the Conditionals 1 & 2 Masterclass.</p>
+
+                <!-- Certificate Display Card -->
+                <div class="my-6 p-6 rounded-2xl bg-gradient-to-br from-indigo-900 via-slate-900 to-indigo-950 text-white border-2 border-amber-400/50 shadow-inner text-left relative overflow-hidden">
+                    <div class="absolute top-2 right-2 opacity-10">
+                        <i data-lucide="award" class="w-32 h-32"></i>
+                    </div>
+                    <div class="text-[10px] tracking-widest uppercase text-amber-400 font-bold mb-1">Grammar Certification</div>
+                    <h4 class="text-lg font-bold">Conditional Sentences Mastery</h4>
+                    <p class="text-xs text-slate-300 mt-0.5">English Proficiency Level B1-B2</p>
+
+                    <div class="mt-6 flex justify-between items-end border-t border-slate-800 pt-4">
+                        <div>
+                            <div class="text-[10px] text-slate-400 uppercase">Final Score</div>
+                            <div class="text-2xl font-extrabold text-amber-400"><span id="certScore">0</span> / 15</div>
+                        </div>
+                        <div class="text-right">
+                            <div class="text-[10px] text-slate-400 uppercase">Grade</div>
+                            <div id="certGrade" class="text-sm font-bold text-emerald-400">EXCELLENT</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex gap-3 justify-center">
+                    <button onclick="closeCertificate()" class="bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold py-3 px-6 rounded-xl transition-colors text-sm">
+                        Close
+                    </button>
+                    <button onclick="restartAll()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-xl shadow-md transition-colors text-sm flex items-center gap-2">
+                        <i data-lucide="rotate-ccw" class="w-4 h-4"></i> Restart App
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 py-6 text-center text-xs text-slate-500 mt-auto">
+        <div class="max-w-6xl mx-auto px-4">
+            <p>© 2026 Interactive Grammar Lab. Designed for English Language Learners.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Global App State
+        const state = {
+            streak: 0,
+            mcqAnswers: {},
+            fillAnswers: {},
+            builderMatched: 0,
+            completedTotal: 0,
+            activeTab: 'learn'
+        };
+
+        // MCQ Questions Data (Part A)
+        const mcqData = [
+            {
+                id: 1,
+                question: "If it _____ sunny tomorrow, we will go to the beach.",
+                options: ["is", "was", "would be", "were"],
+                correct: 0,
+                type: "C1 (Real Future)",
+                explanation: "This is First Conditional (real/probable future). The 'if-clause' uses the Present Simple ('is')."
+            },
+            {
+                id: 2,
+                question: "What would you do if you _____ a million dollars?",
+                options: ["win", "won", "will win", "would win"],
+                correct: 1,
+                type: "C2 (Hypothetical)",
+                explanation: "This is Second Conditional (imaginary). The 'if-clause' takes the Past Simple ('won')."
+            },
+            {
+                id: 3,
+                question: "If I _____ you, I would accept the job offer immediately.",
+                options: ["am", "was", "were", "will be"],
+                correct: 2,
+                type: "C2 (Advice)",
+                explanation: "In standard formal English, we use 'were' for all subjects in Second Conditional advice ('If I were you...')."
+            },
+            {
+                id: 4,
+                question: "If she studies hard, she _____ all her exams next week.",
+                options: ["passed", "would pass", "will pass", "passes"],
+                correct: 2,
+                type: "C1 (Probable Outcome)",
+                explanation: "First Conditional uses 'will + base verb' in the main clause to show a future probable result."
+            },
+            {
+                id: 5,
+                question: "We _____ a bigger house if we had more money.",
+                options: ["will buy", "would buy", "bought", "buy"],
+                correct: 1,
+                type: "C2 (Unreal Situation)",
+                explanation: "Second Conditional uses 'would + base verb' in the main clause for hypothetical circumstances."
+            }
+        ];
+
+        // Fill in Blanks Data (Part B)
+        const fillData = [
+            {
+                id: 1,
+                prompt: "If they <span class='underline font-bold text-emerald-700'>(not / hurry)</span>, they will miss the train.",
+                correct: "don't hurry",
+                altCorrect: "do not hurry",
+                type: "C1",
+                hint: "Use Present Simple negative for C1 if-clause."
+            },
+            {
+                id: 2,
+                prompt: "If I knew how to fly a plane, I <span class='underline font-bold text-indigo-700'>(travel)</span> the world.",
+                correct: "would travel",
+                type: "C2",
+                hint: "Use 'would + base verb' for C2 main clause."
+            },
+            {
+                id: 3,
+                prompt: "If you eat all that chocolate, you <span class='underline font-bold text-emerald-700'>(feel)</span> sick.",
+                correct: "will feel",
+                type: "C1",
+                hint: "Use 'will + base verb' for C1 result."
+            },
+            {
+                id: 4,
+                prompt: "If he <span class='underline font-bold text-indigo-700'>(have)</span> a car, he would drive to work every day.",
+                correct: "had",
+                type: "C2",
+                hint: "Use Past Simple of 'have' for C2 if-clause."
+            },
+            {
+                id: 5,
+                prompt: "I will call you as soon as I <span class='underline font-bold text-emerald-700'>(get)</span> home.",
+                correct: "get",
+                type: "C1",
+                hint: "Use Present Simple for C1 time/if clauses."
+            }
+        ];
+
+        // Sentence Matcher Game Data (Part C)
+        const builderPairs = [
+            { id: 1, ifText: "If it rains tomorrow,", resultText: "I will take an umbrella.", type: "C1" },
+            { id: 2, ifText: "If I won the lottery,", resultText: "I would buy a yacht.", type: "C2" },
+            { id: 3, ifText: "If you don't study,", resultText: "you will fail the test.", type: "C1" },
+            { id: 4, ifText: "If I were you,", resultText: "I would talk to the boss.", type: "C2" },
+            { id: 5, ifText: "If they buy the tickets now,", resultText: "they will get a discount.", type: "C1" }
+        ];
+
+        let selectedIf = null;
+        let selectedResult = null;
+
+        // Initialize App on DOM Content Loaded
+        document.addEventListener("DOMContentLoaded", () => {
+            renderMCQ();
+            renderFillInBlanks();
+            initBuilderGame();
+            lucide.createIcons();
+            updateScores();
+        });
+
+        // Tab Switching Logic
+        function switchTab(tabId) {
+            state.activeTab = tabId;
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('.tab-btn').forEach(el => {
+                el.classList.remove('border-indigo-600', 'text-indigo-600');
+                el.classList.add('border-transparent', 'text-slate-500');
+            });
+
+            document.getElementById(`sec-${tabId}`).classList.remove('hidden');
+            const activeBtn = document.getElementById(`tab-${tabId}`);
+            activeBtn.classList.remove('border-transparent', 'text-slate-500');
+            activeBtn.classList.add('border-indigo-600', 'text-indigo-600');
+        }
+
+        // Render Multiple Choice Questions
+        function renderMCQ() {
+            const container = document.getElementById('mcqContainer');
+            container.innerHTML = mcqData.map((q, idx) => `
+                <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-4" id="mcq-card-${q.id}">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-bold uppercase tracking-wider text-slate-400">Question ${idx + 1} of ${mcqData.length}</span>
+                        <span class="px-2.5 py-1 rounded-full text-xs font-semibold ${q.type.startsWith('C1') ? 'bg-emerald-100 text-emerald-800' : 'bg-indigo-100 text-indigo-800'}">
+                            ${q.type}
+                        </span>
+                    </div>
+
+                    <h4 class="text-base sm:text-lg font-bold text-slate-900">${q.question}</h4>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        ${q.options.map((opt, optIdx) => `
+                            <button onclick="checkMCQ(${q.id}, ${optIdx})" 
+                                id="mcq-opt-${q.id}-${optIdx}" 
+                                class="mcq-opt-btn border-2 border-slate-200 hover:border-indigo-500 bg-slate-50 hover:bg-indigo-50/50 rounded-xl p-3.5 text-left font-medium text-slate-700 transition-all text-sm flex items-center justify-between">
+                                <span>${opt}</span>
+                                <i data-lucide="circle" class="w-4 h-4 text-slate-300 opt-icon"></i>
+                            </button>
+                        `).join('')}
+                    </div>
+
+                    <div id="mcq-expl-${q.id}" class="hidden p-4 rounded-xl border text-xs sm:text-sm font-medium"></div>
+                </div>
+            `).join('');
+            lucide.createIcons();
+        }
+
+        function checkMCQ(qId, selectedIdx) {
+            const q = mcqData.find(item => item.id === qId);
+            if (state.mcqAnswers[qId] !== undefined) return; // Prevent double answering
+
+            state.mcqAnswers[qId] = selectedIdx;
+            const isCorrect = selectedIdx === q.correct;
+            
+            // Highlight buttons
+            q.options.forEach((_, optIdx) => {
+                const btn = document.getElementById(`mcq-opt-${qId}-${optIdx}`);
+                btn.disabled = true;
+                if (optIdx === q.correct) {
+                    btn.classList.remove('border-slate-200', 'bg-slate-50');
+                    btn.classList.add('border-emerald-500', 'bg-emerald-50', 'text-emerald-900', 'font-bold');
+                } else if (optIdx === selectedIdx && !isCorrect) {
+                    btn.classList.remove('border-slate-200', 'bg-slate-50');
+                    btn.classList.add('border-rose-500', 'bg-rose-50', 'text-rose-900');
+                }
+            });
+
+            // Show explanation
+            const expl = document.getElementById(`mcq-expl-${qId}`);
+            expl.classList.remove('hidden');
+            if (isCorrect) {
+                expl.classList.add('bg-emerald-50', 'border-emerald-200', 'text-emerald-900');
+                expl.innerHTML = `<strong>✨ Correct!</strong> ${q.explanation}`;
+                state.streak++;
+            } else {
+                expl.classList.add('bg-rose-50', 'border-rose-200', 'text-rose-900');
+                expl.innerHTML = `<strong>❌ Not quite.</strong> ${q.explanation}`;
+                state.streak = 0;
+            }
+
+            updateScores();
+        }
+
+        // Render Fill in the Blanks
+        function renderFillInBlanks() {
+            const container = document.getElementById('fillContainer');
+            container.innerHTML = fillData.map((item, idx) => `
+                <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-4">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-bold uppercase tracking-wider text-slate-400">Sentence ${idx + 1} of ${fillData.length}</span>
+                        <span class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-slate-100 text-slate-700">
+                            ${item.type}
+                        </span>
+                    </div>
+
+                    <p class="text-base sm:text-lg font-medium text-slate-800 leading-relaxed">${item.prompt}</p>
+
+                    <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+                        <input type="text" id="fill-input-${item.id}" 
+                            placeholder="Type answer here..." 
+                            class="flex-1 border-2 border-slate-200 focus:border-indigo-500 rounded-xl px-4 py-2.5 text-sm font-semibold outline-none transition-colors">
+                        
+                        <button onclick="checkFill(${item.id})" id="fill-btn-${item.id}" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-5 py-2.5 rounded-xl text-sm transition-colors shadow-xs">
+                            Check
+                        </button>
+                    </div>
+
+                    <div id="fill-feedback-${item.id}" class="hidden p-3 rounded-xl border text-xs sm:text-sm font-medium"></div>
+                </div>
+            `).join('');
+        }
+
+        function checkFill(id) {
+            const item = fillData.find(f => f.id === id);
+            const input = document.getElementById(`fill-input-${id}`);
+            const btn = document.getElementById(`fill-btn-${id}`);
+            const feedback = document.getElementById(`fill-feedback-${id}`);
+            
+            const userAns = input.value.trim().toLowerCase();
+            if (!userAns) return;
+
+            const isCorrect = (userAns === item.correct.toLowerCase()) || (item.altCorrect && userAns === item.altCorrect.toLowerCase());
+            state.fillAnswers[id] = isCorrect;
+
+            input.disabled = true;
+            btn.disabled = true;
+            btn.classList.add('opacity-50');
+
+            feedback.classList.remove('hidden');
+            if (isCorrect) {
+                feedback.classList.add('bg-emerald-50', 'border-emerald-200', 'text-emerald-900');
+                feedback.innerHTML = `<strong>✨ Perfect!</strong> "${item.correct}" is correct.`;
+                state.streak++;
+            } else {
+                feedback.classList.add('bg-rose-50', 'border-rose-200', 'text-rose-900');
+                feedback.innerHTML = `<strong>❌ Incorrect.</strong> Correct answer: <strong>${item.correct}</strong>. (${item.hint})`;
+                state.streak = 0;
+            }
+
+            updateScores();
+        }
+
+        // Render Builder Game
+        function initBuilderGame() {
+            selectedIf = null;
+            selectedResult = null;
+            updateMatchFeedback();
+
+            // Shuffle array
+            const shuffledIfs = [...builderPairs].sort(() => Math.random() - 0.5);
+            const shuffledResults = [...builderPairs].sort(() => Math.random() - 0.5);
+
+            const ifContainer = document.getElementById('ifClauseList');
+            const resultContainer = document.getElementById('resultClauseList');
+
+            ifContainer.innerHTML = shuffledIfs.map(p => `
+                <button onclick="selectIfCard(${p.id})" id="if-card-${p.id}" class="w-full text-left p-4 rounded-xl border-2 border-slate-200 hover:border-emerald-500 bg-slate-50 font-semibold text-slate-800 text-sm transition-all flex items-center justify-between">
+                    <span>${p.ifText}</span>
+                    <i data-lucide="plus-circle" class="w-4 h-4 text-slate-400"></i>
+                </button>
+            `).join('');
+
+            resultContainer.innerHTML = shuffledResults.map(p => `
+                <button onclick="selectResultCard(${p.id})" id="result-card-${p.id}" class="w-full text-left p-4 rounded-xl border-2 border-slate-200 hover:border-indigo-500 bg-slate-50 font-semibold text-slate-800 text-sm transition-all flex items-center justify-between">
+                    <span>${p.resultText}</span>
+                    <i data-lucide="plus-circle" class="w-4 h-4 text-slate-400"></i>
+                </button>
+            `).join('');
+
+            lucide.createIcons();
+        }
+
+        function selectIfCard(id) {
+            document.querySelectorAll('[id^="if-card-"]').forEach(btn => btn.classList.remove('border-emerald-500', 'bg-emerald-50'));
+            selectedIf = id;
+            document.getElementById(`if-card-${id}`).classList.add('border-emerald-500', 'bg-emerald-50');
+            updateMatchFeedback();
+        }
+
+        function selectResultCard(id) {
+            document.querySelectorAll('[id^="result-card-"]').forEach(btn => btn.classList.remove('border-indigo-500', 'bg-indigo-50'));
+            selectedResult = id;
+            document.getElementById(`result-card-${id}`).classList.add('border-indigo-500', 'bg-indigo-50');
+            updateMatchFeedback();
+        }
+
+        function updateMatchFeedback() {
+            const fb = document.getElementById('matchFeedback');
+            const txt = document.getElementById('matchFeedbackText');
+            const btn = document.getElementById('confirmPairBtn');
+
+            if (selectedIf && selectedResult) {
+                fb.classList.remove('hidden');
+                fb.className = "p-4 rounded-xl border border-indigo-200 bg-indigo-50 text-indigo-900 text-sm font-semibold flex items-center justify-between";
+                txt.innerHTML = "Ready to verify this conditional sentence pair?";
+                btn.classList.remove('hidden');
+            } else if (selectedIf || selectedResult) {
+                fb.classList.remove('hidden');
+                fb.className = "p-4 rounded-xl border border-slate-200 bg-slate-50 text-slate-700 text-sm font-semibold flex items-center justify-between";
+                txt.innerHTML = "Now select a matching card from the second column.";
+                btn.classList.add('hidden');
+            }
+        }
+
+        function confirmPairing() {
+            if (!selectedIf || !selectedResult) return;
+
+            if (selectedIf === selectedResult) {
+                // Correct Match
+                document.getElementById(`if-card-${selectedIf}`).classList.add('opacity-40', 'pointer-events-none', 'bg-emerald-100');
+                document.getElementById(`result-card-${selectedResult}`).classList.add('opacity-40', 'pointer-events-none', 'bg-emerald-100');
+                state.builderMatched++;
+                state.streak++;
+            } else {
+                state.streak = 0;
+            }
+
+            selectedIf = null;
+            selectedResult = null;
+            document.getElementById('matchFeedback').classList.add('hidden');
+            document.getElementById('confirmPairBtn').classList.add('hidden');
+
+            updateScores();
+        }
+
+        function resetBuilderGame() {
+            initBuilderGame();
+        }
+
+        // Global Progress Updates
+        function updateScores() {
+            const mcqScore = Object.keys(state.mcqAnswers).filter(k => {
+                const q = mcqData.find(item => item.id == k);
+                return q && state.mcqAnswers[k] === q.correct;
+            }).length;
+
+            const fillScore = Object.values(state.fillAnswers).filter(Boolean).length;
+            const builderScore = state.builderMatched;
+
+            const totalScore = mcqScore + fillScore + builderScore;
+            const maxScore = mcqData.length + fillData.length + builderPairs.length; // 15
+            const pct = Math.round((totalScore / maxScore) * 100);
+
+            // Update UI elements
+            document.getElementById('headerScore').innerText = totalScore;
+            document.getElementById('streakCount').innerText = state.streak;
+            document.getElementById('mcqProgress').innerText = `${Object.keys(state.mcqAnswers).length}/${mcqData.length}`;
+            document.getElementById('fillProgress').innerText = `${Object.keys(state.fillAnswers).length}/${fillData.length}`;
+            
+            document.getElementById('progressPercentage').innerText = `${pct}%`;
+            document.getElementById('mainProgressBar').style.width = `${pct}%`;
+
+            // Check if ready for Certificate
+            if (totalScore >= 12 && !state.certShown) {
+                showCertificate(totalScore, maxScore);
+            }
+        }
+
+        function showCertificate(score, max) {
+            state.certShown = true;
+            document.getElementById('certScore').innerText = score;
+            const pct = (score / max) * 100;
+            const gradeEl = document.getElementById('certGrade');
+
+            if (pct >= 90) {
+                gradeEl.innerText = "MASTERY (PASS WITH HONORS)";
+                gradeEl.className = "text-sm font-bold text-amber-400";
+            } else if (pct >= 75) {
+                gradeEl.innerText = "EXCELLENT";
+                gradeEl.className = "text-sm font-bold text-emerald-400";
+            } else {
+                gradeEl.innerText = "PASSED";
+                gradeEl.className = "text-sm font-bold text-indigo-400";
+            }
+
+            document.getElementById('certModal').classList.remove('hidden');
+
+            // Trigger celebration confetti
+            confetti({
+                particleCount: 100,
+                spread: 70,
+                origin: { y: 0.6 }
+            });
+        }
+
+        function closeCertificate() {
+            document.getElementById('certModal').classList.add('hidden');
+        }
+
+        function restartAll() {
+            state.streak = 0;
+            state.mcqAnswers = {};
+            state.fillAnswers = {};
+            state.builderMatched = 0;
+            state.certShown = false;
+
+            closeCertificate();
+            renderMCQ();
+            renderFillInBlanks();
+            initBuilderGame();
+            updateScores();
+            switchTab('learn');
+        }
+    </script>
+</body>
+</html>
